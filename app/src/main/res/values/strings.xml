@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">Login Exercise</string>
+    <string name="close_application">Close Application</string>
+    <string name="access">Acceso</string>
+    <string name="password">Password</string>
+    <string name="email">Email</string>
+    <string name="recordar">Recordar</string>
+    <string name="entrar">Entrar</string>
+    <string name="show_password">show password button</string>
 </resources>

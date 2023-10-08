@@ -8,4 +8,5 @@
     <string name="login">Entrar</string>
     <string name="show_password">Mostrar contraseña</string>
     <string name="passwordInput">Introduce tu contraseña</string>
+    <string name="required">Campo requerido</string>
 </resources>

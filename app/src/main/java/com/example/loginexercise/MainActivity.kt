@@ -3,6 +3,7 @@ package com.example.loginexercise
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Patterns
+import androidx.appcompat.app.AlertDialog
 import com.example.loginexercise.databinding.ActivityLoginBinding
 
 class MainActivity : AppCompatActivity() {
@@ -15,9 +16,41 @@ class MainActivity : AppCompatActivity() {
         binding.loginBtnClose.setOnClickListener{ closeApp() }
         emailFocusListener()
         passwordFocusListener()
+
+        binding.loginBtnLogin.setOnClickListener { submitForm() }
     }
     private fun closeApp(){
         finish()
+    }
+
+    private fun submitForm(){
+        val validEmail = binding.loginContainerEmail.helperText == null
+        val validPassword = binding.loginContainerPassword.helperText == null
+
+        if(validEmail && validPassword){
+            submitData()
+        }
+        else{
+            invalidForm()
+        }
+    }
+
+    private fun submitData(){
+        //TO DO
+    }
+    private fun invalidForm(){
+        var message = ""
+        if(binding.loginContainerEmail.helperText != null){
+            message += "\n\nEmail: " + binding.loginContainerEmail.helperText
+        }
+        if(binding.loginContainerPassword.helperText != null){
+            message += "\n\nPassword: " + binding.loginContainerPassword.helperText
+        }
+
+        AlertDialog.Builder(this)
+            .setTitle("Error")
+            .setMessage(message)
+            .setPositiveButton("Okey"){_,_ -> }.show()
     }
 
     data class User(
@@ -62,8 +95,12 @@ class MainActivity : AppCompatActivity() {
         if(!passwordText.matches(".*[A-Z].*".toRegex())){
             return "Debe tener al menos 1 mayúscula"
         }
-        //To do rest of the validations...
-
+        if(!passwordText.matches(".*[a-z].*".toRegex()))
+            return "Debe tener al menos 1 minúscula"
+        if(!passwordText.matches(".*[0-9].*".toRegex())){
+            return "Debe tener al menos 1 número"
+        }
         return null
     }
+
 }

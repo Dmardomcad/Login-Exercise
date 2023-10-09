@@ -13,9 +13,26 @@
         android:layout_marginTop="42dp"
         android:fontFamily="sans-serif-black"
         android:text="@string/access"
+        android:textSize="18sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <Button
+        android:id="@+id/loginBtnLogin"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="32dp"
+        android:text="@string/login"
+        android:accessibilityTraversalAfter="@id/loginInputPassword"
+        android:fontFamily="sans-serif"
+        android:enabled="false"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        />
 
     <com.google.android.material.switchmaterial.SwitchMaterial
         android:id="@+id/loginSwitchRemember"
@@ -32,19 +49,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/loginContainerPassword" />
 
-    <Button
-        android:id="@+id/loginBtnLogin"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="24dp"
-        android:layout_marginEnd="24dp"
-        android:layout_marginBottom="32dp"
-        android:text="@string/login"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        android:fontFamily="sans-serif"
-        />
+
 
     <ImageButton
         android:id="@+id/loginBtnClose"

@@ -3,10 +3,13 @@ package com.example.loginexercise
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.util.Patterns
+import android.view.View
 import androidx.appcompat.app.AlertDialog
 import com.example.loginexercise.databinding.ActivityLoginBinding
 
@@ -65,7 +68,11 @@ class MainActivity : AppCompatActivity() {
         val validPassword = binding.loginContainerPassword.helperText == null
 
         if(validEmail && validPassword){
-            submitData()
+            binding.loginBtnLogin.visibility = View.GONE
+            binding.loginProgressIndicatorLoading.visibility = View.VISIBLE
+            Handler(Looper.getMainLooper()).postDelayed({
+                submitData()
+            }, 1000)
         }
         else{
             invalidForm()

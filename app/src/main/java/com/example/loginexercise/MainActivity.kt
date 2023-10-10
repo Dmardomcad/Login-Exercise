@@ -1,5 +1,6 @@
 package com.example.loginexercise
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -7,7 +8,6 @@ import android.os.Handler
 import android.os.Looper
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.util.Patterns
 import android.view.View
 import androidx.appcompat.app.AlertDialog
@@ -20,8 +20,25 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        val sharedPreferences = getSharedPreferences("login_data", Context.MODE_PRIVATE)
+        val rememberSwitch = binding.loginSwitchRemember
+        rememberSwitch.isChecked = sharedPreferences.getBoolean("remember_password", false)
         binding.loginBtnClose.setOnClickListener{ closeApp() }
         binding.loginBtnLogin.setOnClickListener { submitForm() }
+
+        val savedEmail = intent.getStringExtra("email")
+        val savedPassword = intent.getStringExtra("password")
+        if(savedEmail != null && savedPassword != null){
+            val loginButton = binding.loginBtnLogin
+            binding.loginContainerPassword.helperText = null
+            binding.loginContainerEmail.helperText = null
+
+            loginButton.isEnabled = binding.loginContainerPassword.helperText == null && binding.loginContainerEmail.helperText == null
+            binding.loginInputEmail.setText(savedEmail)
+            binding.loginInputPassword.setText(savedPassword)
+        } else {
+            //do nothing
+        }
 
         binding.loginInputEmail.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
@@ -90,12 +107,22 @@ class MainActivity : AppCompatActivity() {
         val savedEmail = binding.loginInputEmail.text.toString()
         val savedPassword = binding.loginInputPassword.text.toString()
 
-        val welcomeIntent = Intent(this, WelcomeActivity::class.java)
+        val sharedPreferences = getSharedPreferences("login_data", Context.MODE_PRIVATE)
+        val editor = sharedPreferences.edit()
+        editor.putBoolean("remember_password", rememberSwitch.isChecked)
+        editor.apply()
+
         if(rememberSwitch.isChecked){
-            Log.d("SWITCHING", savedEmail+savedPassword)
+            val welcomeIntent = Intent(this, WelcomeActivity::class.java)
+            welcomeIntent.putExtra("email", savedEmail)
+            welcomeIntent.putExtra("password", savedPassword)
+            startActivity(welcomeIntent)
+
+        } else {
+            val welcomeIntent = Intent(this, WelcomeActivity::class.java)
             startActivity(welcomeIntent)
         }
-        startActivity(welcomeIntent)
+
     }
 
     private fun invalidForm(){
@@ -115,7 +142,7 @@ class MainActivity : AppCompatActivity() {
 
     val mockUsers = listOf(
         User("Pepe","pepegzlez@example.es","a123456B"),
-        User("shadowdarkness09","edgyemail@example.es","darks234")
+        User("shadow","edgyemail@example.es","B65432a")
     )
 
     private fun validEmail(): String?{

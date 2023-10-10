@@ -18,8 +18,13 @@ class WelcomeActivity : AppCompatActivity() {
         }
 
     private fun closeSession(){
-        val intent = Intent(this, MainActivity::class.java)
-        startActivity(intent)
+        val savedEmail = intent.getStringExtra("email")
+        val savedPassword = intent.getStringExtra("password")
+
+        val loginIntent = Intent(this, MainActivity::class.java)
+        loginIntent.putExtra("email", savedEmail)
+        loginIntent.putExtra("password",savedPassword)
+        startActivity(loginIntent)
         }
 
     }

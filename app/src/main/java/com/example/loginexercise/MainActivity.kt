@@ -2,6 +2,8 @@ package com.example.loginexercise
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.util.Patterns
 import androidx.appcompat.app.AlertDialog
 import com.example.loginexercise.databinding.ActivityLoginBinding
@@ -18,7 +20,47 @@ class MainActivity : AppCompatActivity() {
         passwordFocusListener()
 
         binding.loginBtnLogin.setOnClickListener { submitForm() }
+
+
+        binding.loginInputEmail.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(p0: Editable?) {
+                validateForm()
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+        })
+        binding.loginInputPassword.addTextChangedListener(object : TextWatcher {
+            override fun afterTextChanged(p0: Editable?) {
+                validateForm()
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+        })
     }
+
+    private fun validateForm(){
+        val loginButton = binding.loginBtnLogin
+        if(validPassword() == null && validEmail() == null){
+            loginButton.isEnabled = true
+        } else {
+            loginButton.isEnabled = false
+        }
+    }
+
+
+
     private fun closeApp(){
         finish()
     }

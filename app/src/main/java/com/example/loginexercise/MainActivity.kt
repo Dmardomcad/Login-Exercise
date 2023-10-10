@@ -15,7 +15,7 @@ import com.example.loginexercise.databinding.ActivityLoginBinding
 
 class MainActivity : AppCompatActivity() {
 
-    lateinit var binding: ActivityLoginBinding
+    private lateinit var binding: ActivityLoginBinding
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
@@ -23,17 +23,18 @@ class MainActivity : AppCompatActivity() {
         val sharedPreferences = getSharedPreferences("login_data", Context.MODE_PRIVATE)
         val rememberSwitch = binding.loginSwitchRemember
         rememberSwitch.isChecked = sharedPreferences.getBoolean("remember_password", false)
-        binding.loginBtnClose.setOnClickListener{ closeApp() }
+        binding.loginBtnClose.setOnClickListener { closeApp() }
         binding.loginBtnLogin.setOnClickListener { submitForm() }
 
         val savedEmail = intent.getStringExtra("email")
         val savedPassword = intent.getStringExtra("password")
-        if(savedEmail != null && savedPassword != null){
+        if (savedEmail != null && savedPassword != null) {
             val loginButton = binding.loginBtnLogin
             binding.loginContainerPassword.helperText = null
             binding.loginContainerEmail.helperText = null
 
-            loginButton.isEnabled = binding.loginContainerPassword.helperText == null && binding.loginContainerEmail.helperText == null
+            loginButton.isEnabled =
+                binding.loginContainerPassword.helperText == null && binding.loginContainerEmail.helperText == null
             binding.loginInputEmail.setText(savedEmail)
             binding.loginInputPassword.setText(savedPassword)
         } else {
@@ -68,7 +69,7 @@ class MainActivity : AppCompatActivity() {
         })
     }
 
-    private fun validateForm(){
+    private fun validateForm() {
         val loginButton = binding.loginBtnLogin
         binding.loginContainerPassword.helperText = validPassword()
         binding.loginContainerEmail.helperText = validEmail()
@@ -76,22 +77,22 @@ class MainActivity : AppCompatActivity() {
         loginButton.isEnabled = validPassword() == null && validEmail() == null
     }
 
-    private fun closeApp(){
+    private fun closeApp() {
         finish()
     }
 
-    private fun submitForm(){
+    private fun submitForm() {
         val validEmail = binding.loginContainerEmail.helperText == null
         val validPassword = binding.loginContainerPassword.helperText == null
 
-        if(validEmail && validPassword){
+        if (validEmail && validPassword) {
             binding.loginBtnLogin.visibility = View.GONE
             binding.loginProgressIndicatorLoading.visibility = View.VISIBLE
             Handler(Looper.getMainLooper()).postDelayed({
                 val email = binding.loginInputEmail.text.toString()
                 val password = binding.loginInputPassword.text.toString()
-                val user = mockUsers.find{ it.email == email && it.password == password}
-                if(user != null){
+                val user = mockUsers.find { it.email == email && it.password == password }
+                if (user != null) {
                     submitData()
                 } else {
                     binding.loginBtnLogin.visibility = View.VISIBLE
@@ -102,7 +103,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun submitData(){
+    private fun submitData() {
         val rememberSwitch = binding.loginSwitchRemember
         val savedEmail = binding.loginInputEmail.text.toString()
         val savedPassword = binding.loginInputPassword.text.toString()
@@ -112,7 +113,7 @@ class MainActivity : AppCompatActivity() {
         editor.putBoolean("remember_password", rememberSwitch.isChecked)
         editor.apply()
 
-        if(rememberSwitch.isChecked){
+        if (rememberSwitch.isChecked) {
             val welcomeIntent = Intent(this, WelcomeActivity::class.java)
             welcomeIntent.putExtra("email", savedEmail)
             welcomeIntent.putExtra("password", savedPassword)
@@ -125,13 +126,13 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun invalidForm(){
-        var message = "ESTE USUARIO NO ESTÁ REGISTRADO"
+    private fun invalidForm() {
+        val message = "ESTE USUARIO NO ESTÁ REGISTRADO"
 
         AlertDialog.Builder(this)
             .setTitle("Error")
             .setMessage(message)
-            .setPositiveButton("Okey"){_,_ -> }.show()
+            .setPositiveButton("Okey") { _, _ -> }.show()
     }
 
     data class User(
@@ -140,12 +141,12 @@ class MainActivity : AppCompatActivity() {
         val password: String,
     )
 
-    val mockUsers = listOf(
-        User("Pepe","pepegzlez@example.es","a123456B"),
-        User("shadow","edgyemail@example.es","B65432a")
+    private val mockUsers = listOf(
+        User("Pepe", "pepegzlez@example.es", "a123456B"),
+        User("shadow", "edgyemail@example.es", "B65432a")
     )
 
-    private fun validEmail(): String?{
+    private fun validEmail(): String? {
         val emailText = binding.loginInputEmail.text.toString()
         if (!Patterns.EMAIL_ADDRESS.matcher(emailText).matches()) {
             return "Email no válido"
@@ -154,17 +155,17 @@ class MainActivity : AppCompatActivity() {
         return null
     }
 
-    private fun validPassword(): String?{
+    private fun validPassword(): String? {
         val passwordText = binding.loginInputPassword.text.toString()
-        if(passwordText.length < 6){
+        if (passwordText.length < 6) {
             return "Mínimo 6 carácteres"
         }
-        if(!passwordText.matches(".*[A-Z].*".toRegex())){
+        if (!passwordText.matches(".*[A-Z].*".toRegex())) {
             return "Debe tener al menos 1 mayúscula"
         }
-        if(!passwordText.matches(".*[a-z].*".toRegex()))
+        if (!passwordText.matches(".*[a-z].*".toRegex()))
             return "Debe tener al menos 1 minúscula"
-        if(!passwordText.matches(".*[0-9].*".toRegex())){
+        if (!passwordText.matches(".*[0-9].*".toRegex())) {
             return "Debe tener al menos 1 número"
         }
         return null

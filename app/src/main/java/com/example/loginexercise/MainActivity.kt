@@ -1,9 +1,11 @@
 package com.example.loginexercise
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.util.Patterns
 import androidx.appcompat.app.AlertDialog
 import com.example.loginexercise.databinding.ActivityLoginBinding
@@ -16,9 +18,7 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.loginBtnClose.setOnClickListener{ closeApp() }
-
         binding.loginBtnLogin.setOnClickListener { submitForm() }
-
 
         binding.loginInputEmail.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
@@ -53,11 +53,8 @@ class MainActivity : AppCompatActivity() {
         binding.loginContainerPassword.helperText = validPassword()
         binding.loginContainerEmail.helperText = validEmail()
 
-
         loginButton.isEnabled = validPassword() == null && validEmail() == null
     }
-
-
 
     private fun closeApp(){
         finish()
@@ -76,8 +73,18 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun submitData(){
-        //TO DO
+        val rememberSwitch = binding.loginSwitchRemember
+        val savedEmail = binding.loginInputEmail.text.toString()
+        val savedPassword = binding.loginInputPassword.text.toString()
+
+        val welcomeIntent = Intent(this, WelcomeActivity::class.java)
+        if(rememberSwitch.isChecked){
+            Log.d("SWITCHING", savedEmail+savedPassword)
+            startActivity(welcomeIntent)
+        }
+        startActivity(welcomeIntent)
     }
+
     private fun invalidForm(){
         var message = ""
         if(binding.loginContainerEmail.helperText != null){

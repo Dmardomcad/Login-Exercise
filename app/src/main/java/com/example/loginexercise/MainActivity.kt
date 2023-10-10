@@ -71,11 +71,17 @@ class MainActivity : AppCompatActivity() {
             binding.loginBtnLogin.visibility = View.GONE
             binding.loginProgressIndicatorLoading.visibility = View.VISIBLE
             Handler(Looper.getMainLooper()).postDelayed({
-                submitData()
+                val email = binding.loginInputEmail.text.toString()
+                val password = binding.loginInputPassword.text.toString()
+                val user = mockUsers.find{ it.email == email && it.password == password}
+                if(user != null){
+                    submitData()
+                } else {
+                    binding.loginBtnLogin.visibility = View.VISIBLE
+                    binding.loginProgressIndicatorLoading.visibility = View.GONE
+                    invalidForm()
+                }
             }, 1000)
-        }
-        else{
-            invalidForm()
         }
     }
 
@@ -93,13 +99,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun invalidForm(){
-        var message = ""
-        if(binding.loginContainerEmail.helperText != null){
-            message += "\n\nEmail: " + binding.loginContainerEmail.helperText
-        }
-        if(binding.loginContainerPassword.helperText != null){
-            message += "\n\nPassword: " + binding.loginContainerPassword.helperText
-        }
+        var message = "ESTE USUARIO NO ESTÁ REGISTRADO"
 
         AlertDialog.Builder(this)
             .setTitle("Error")
@@ -114,7 +114,7 @@ class MainActivity : AppCompatActivity() {
     )
 
     val mockUsers = listOf(
-        User("Pepe","pepegzlez@example.es","a1234567"),
+        User("Pepe","pepegzlez@example.es","a123456B"),
         User("shadowdarkness09","edgyemail@example.es","darks234")
     )
 

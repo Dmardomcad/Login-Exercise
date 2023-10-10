@@ -16,8 +16,6 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
         binding.loginBtnClose.setOnClickListener{ closeApp() }
-        emailFocusListener()
-        passwordFocusListener()
 
         binding.loginBtnLogin.setOnClickListener { submitForm() }
 
@@ -52,11 +50,11 @@ class MainActivity : AppCompatActivity() {
 
     private fun validateForm(){
         val loginButton = binding.loginBtnLogin
-        if(validPassword() == null && validEmail() == null){
-            loginButton.isEnabled = true
-        } else {
-            loginButton.isEnabled = false
-        }
+        binding.loginContainerPassword.helperText = validPassword()
+        binding.loginContainerEmail.helperText = validEmail()
+
+
+        loginButton.isEnabled = validPassword() == null && validEmail() == null
     }
 
 
@@ -106,13 +104,6 @@ class MainActivity : AppCompatActivity() {
         User("shadowdarkness09","edgyemail@example.es","darks234")
     )
 
-    private fun emailFocusListener(){
-        binding.loginInputEmail.setOnFocusChangeListener {_, focused ->
-            if (!focused){
-                binding.loginContainerEmail.helperText = validEmail()
-            }
-        }
-    }
     private fun validEmail(): String?{
         val emailText = binding.loginInputEmail.text.toString()
         if (!Patterns.EMAIL_ADDRESS.matcher(emailText).matches()) {
@@ -122,13 +113,6 @@ class MainActivity : AppCompatActivity() {
         return null
     }
 
-    private fun passwordFocusListener(){
-        binding.loginInputPassword.setOnFocusChangeListener { _, focused ->
-            if(!focused){
-                binding.loginContainerPassword.helperText = validPassword()
-            }
-        }
-    }
     private fun validPassword(): String?{
         val passwordText = binding.loginInputPassword.text.toString()
         if(passwordText.length < 6){

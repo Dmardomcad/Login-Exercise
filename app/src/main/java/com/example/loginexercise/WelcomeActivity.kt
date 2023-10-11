@@ -19,19 +19,26 @@ class WelcomeActivity : AppCompatActivity() {
         val savedEmail = intent.getStringExtra("email")
         binding.homeLabelThisUserEmail.text = savedEmail
 
+        val savedName = intent.getStringExtra("name")
+        binding.homeLabelThisUserName.text = savedName
+
+        val savedImage = intent.getIntExtra("avatar", 0)
+        if(savedImage != 0){
+            binding.homeImgAvatar.setImageResource(savedImage)
+        }
         }
 
     private fun closeSession(){
-        val savedEmail = intent.getStringExtra("email")
-        val savedPassword = intent.getStringExtra("password")
+        val savedEmail = intent.getStringExtra("rememberEmail")
+        val savedPassword = intent.getStringExtra("rememberPassword")
         val alertDialogBuilder = AlertDialog.Builder(this)
 
         alertDialogBuilder.setMessage("¿Cerrar sesión?")
         alertDialogBuilder.setPositiveButton("Sí"){
             _, _ ->
             val loginIntent = Intent(this, LoginActivity::class.java)
-            loginIntent.putExtra("email", savedEmail)
-            loginIntent.putExtra("password",savedPassword)
+            loginIntent.putExtra("rememberEmail", savedEmail)
+            loginIntent.putExtra("rememberPassword",savedPassword)
             startActivity(loginIntent)
             finish()
         }

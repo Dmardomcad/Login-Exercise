@@ -145,7 +145,6 @@ class LoginActivity : AppCompatActivity() {
             startActivity(welcomeIntent)
             finish()
         }
-
     }
     //endregion
 

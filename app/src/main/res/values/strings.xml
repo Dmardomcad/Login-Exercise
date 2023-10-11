@@ -9,4 +9,8 @@
     <string name="show_password">Mostrar contraseña</string>
     <string name="passwordInput">Introduce tu contraseña</string>
     <string name="required">Campo requerido</string>
+    <string name="my_data">Mis datos</string>
+    <string name="email_label">Email</string>
+    <string name="name_label">Nombre</string>
+    <string name="close_session">Cerrar sesión</string>
 </resources>

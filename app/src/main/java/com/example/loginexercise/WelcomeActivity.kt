@@ -15,6 +15,9 @@ class WelcomeActivity : AppCompatActivity() {
 
         binding.welcomeBtnCloseSession.setOnClickListener { closeSession() }
 
+        val savedEmail = intent.getStringExtra("email")
+        binding.homeLabelThisUserEmail.text = savedEmail
+
         }
 
     private fun closeSession(){

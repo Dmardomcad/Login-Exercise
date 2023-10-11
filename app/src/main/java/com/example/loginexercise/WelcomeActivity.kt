@@ -21,7 +21,7 @@ class WelcomeActivity : AppCompatActivity() {
         val savedEmail = intent.getStringExtra("email")
         val savedPassword = intent.getStringExtra("password")
 
-        val loginIntent = Intent(this, MainActivity::class.java)
+        val loginIntent = Intent(this, LoginActivity::class.java)
         loginIntent.putExtra("email", savedEmail)
         loginIntent.putExtra("password",savedPassword)
         startActivity(loginIntent)

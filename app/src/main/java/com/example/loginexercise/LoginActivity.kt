@@ -13,7 +13,7 @@ import android.view.View
 import androidx.appcompat.app.AlertDialog
 import com.example.loginexercise.databinding.ActivityLoginBinding
 
-class MainActivity : AppCompatActivity() {
+class LoginActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityLoginBinding
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -68,6 +68,17 @@ class MainActivity : AppCompatActivity() {
             }
         })
     }
+
+    data class User(
+        val username: String,
+        val email: String,
+        val password: String,
+    )
+
+    private val mockUsers = listOf(
+        User("Pepe", "pepegzlez@example.es", "a123456B"),
+        User("shadow", "edgyemail@example.es", "B65432a")
+    )
 
     private fun validateForm() {
         val loginButton = binding.loginBtnLogin
@@ -134,17 +145,6 @@ class MainActivity : AppCompatActivity() {
             .setMessage(message)
             .setPositiveButton("Okey") { _, _ -> }.show()
     }
-
-    data class User(
-        val username: String,
-        val email: String,
-        val password: String,
-    )
-
-    private val mockUsers = listOf(
-        User("Pepe", "pepegzlez@example.es", "a123456B"),
-        User("shadow", "edgyemail@example.es", "B65432a")
-    )
 
     private fun validEmail(): String? {
         val emailText = binding.loginInputEmail.text.toString()

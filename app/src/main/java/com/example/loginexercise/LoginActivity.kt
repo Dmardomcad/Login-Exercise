@@ -26,8 +26,8 @@ class LoginActivity : AppCompatActivity() {
         binding.loginBtnClose.setOnClickListener { closeApp() }
         binding.loginBtnLogin.setOnClickListener { submitForm() }
 
-        val savedEmail = intent.getStringExtra("email")
-        val savedPassword = intent.getStringExtra("password")
+        val savedEmail = intent.getStringExtra("rememberEmail")
+        val savedPassword = intent.getStringExtra("rememberPassword")
         if (savedEmail != null && savedPassword != null) {
             val loginButton = binding.loginBtnLogin
             binding.loginContainerPassword.helperText = null
@@ -38,7 +38,7 @@ class LoginActivity : AppCompatActivity() {
             binding.loginInputEmail.setText(savedEmail)
             binding.loginInputPassword.setText(savedPassword)
         } else {
-            //do nothing
+
         }
 
         binding.loginInputEmail.addTextChangedListener(object : TextWatcher {
@@ -73,11 +73,12 @@ class LoginActivity : AppCompatActivity() {
         val username: String,
         val email: String,
         val password: String,
+        val avatarId: Int
     )
 
     private val mockUsers = listOf(
-        User("Pepe", "pepegzlez@example.es", "a123456B"),
-        User("shadow", "edgyemail@example.es", "B65432a")
+        User("Pepe", "pepegzlez@example.es", "a123456B", R.drawable.img__home_screen_pepe),
+        User("shadow", "edgyemail@example.es", "B65432a", R.drawable.img__home_screen_shadow)
     )
 
     private fun validateForm() {
@@ -123,20 +124,32 @@ class LoginActivity : AppCompatActivity() {
         val editor = sharedPreferences.edit()
         editor.putBoolean("remember_password", rememberSwitch.isChecked)
         editor.apply()
-
+        val user = mockUsers.find { it.email == savedEmail && it.password == savedPassword}
         if (rememberSwitch.isChecked) {
-            val welcomeIntent = Intent(this, WelcomeActivity::class.java)
-            welcomeIntent.putExtra("email", savedEmail)
-            welcomeIntent.putExtra("password", savedPassword)
-            startActivity(welcomeIntent)
-            finish()
-
+            if (user != null) {
+                val welcomeIntent = Intent(this, WelcomeActivity::class.java)
+                welcomeIntent.putExtra("email", user.email)
+                welcomeIntent.putExtra("password",user.password)
+                welcomeIntent.putExtra("name",user.username)
+                welcomeIntent.putExtra("avatar", user.avatarId)
+                welcomeIntent.putExtra("rememberEmail", savedEmail)
+                welcomeIntent.putExtra("rememberPassword", savedPassword)
+                startActivity(welcomeIntent)
+                finish()
+            }
         } else {
-            val welcomeIntent = Intent(this, WelcomeActivity::class.java)
-            startActivity(welcomeIntent)
-            finish()
+            if (user!=null){
+                //Fix problemas con el login, se recuerda al usuario incluso sin rememberSwitch checked
+                // Probablemente problemas con los nombres de vals al pasarla entre intents
+                val welcomeIntent = Intent(this, WelcomeActivity::class.java)
+                welcomeIntent.putExtra("email", user.email)
+                welcomeIntent.putExtra("password",user.password)
+                welcomeIntent.putExtra("name",user.username)
+                welcomeIntent.putExtra("avatar", user.avatarId)
+                startActivity(welcomeIntent)
+                finish()
+            }
         }
-
     }
 
     private fun invalidForm() {

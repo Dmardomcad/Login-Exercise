@@ -3,6 +3,7 @@ package com.example.loginexercise
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import androidx.appcompat.app.AlertDialog
 import com.example.loginexercise.databinding.ActivityWelcomeBinding
 
 class WelcomeActivity : AppCompatActivity() {
@@ -23,12 +24,23 @@ class WelcomeActivity : AppCompatActivity() {
     private fun closeSession(){
         val savedEmail = intent.getStringExtra("email")
         val savedPassword = intent.getStringExtra("password")
+        val alertDialogBuilder = AlertDialog.Builder(this)
 
-        val loginIntent = Intent(this, LoginActivity::class.java)
-        loginIntent.putExtra("email", savedEmail)
-        loginIntent.putExtra("password",savedPassword)
-        finish()
-        startActivity(loginIntent)
+        alertDialogBuilder.setMessage("¿Cerrar sesión?")
+        alertDialogBuilder.setPositiveButton("Sí"){
+            _, _ ->
+            val loginIntent = Intent(this, LoginActivity::class.java)
+            loginIntent.putExtra("email", savedEmail)
+            loginIntent.putExtra("password",savedPassword)
+            startActivity(loginIntent)
+            finish()
+        }
+        alertDialogBuilder.setNegativeButton("No") {
+            dialog, _ ->
+            dialog.dismiss()
+        }
+        val alertDialog = alertDialogBuilder.create()
+        alertDialog.show()
         }
 
     }

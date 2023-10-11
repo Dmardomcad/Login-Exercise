@@ -129,10 +129,12 @@ class LoginActivity : AppCompatActivity() {
             welcomeIntent.putExtra("email", savedEmail)
             welcomeIntent.putExtra("password", savedPassword)
             startActivity(welcomeIntent)
+            finish()
 
         } else {
             val welcomeIntent = Intent(this, WelcomeActivity::class.java)
             startActivity(welcomeIntent)
+            finish()
         }
 
     }

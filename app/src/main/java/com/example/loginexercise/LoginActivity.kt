@@ -33,12 +33,11 @@ class LoginActivity : AppCompatActivity() {
             binding.loginContainerPassword.helperText = null
             binding.loginContainerEmail.helperText = null
 
-            loginButton.isEnabled =
-                binding.loginContainerPassword.helperText == null && binding.loginContainerEmail.helperText == null
+            loginButton.isEnabled = binding.loginContainerPassword.helperText == null && binding.loginContainerEmail.helperText == null
             binding.loginInputEmail.setText(savedEmail)
             binding.loginInputPassword.setText(savedPassword)
         } else {
-
+            // Do nothing
         }
 
         binding.loginInputEmail.addTextChangedListener(object : TextWatcher {
@@ -124,6 +123,7 @@ class LoginActivity : AppCompatActivity() {
         val editor = sharedPreferences.edit()
         editor.putBoolean("remember_password", rememberSwitch.isChecked)
         editor.apply()
+
         val user = mockUsers.find { it.email == savedEmail && it.password == savedPassword}
         if (rememberSwitch.isChecked) {
             if (user != null) {
@@ -139,8 +139,6 @@ class LoginActivity : AppCompatActivity() {
             }
         } else {
             if (user!=null){
-                //Fix problemas con el login, se recuerda al usuario incluso sin rememberSwitch checked
-                // Probablemente problemas con los nombres de vals al pasarla entre intents
                 val welcomeIntent = Intent(this, WelcomeActivity::class.java)
                 welcomeIntent.putExtra("email", user.email)
                 welcomeIntent.putExtra("password",user.password)

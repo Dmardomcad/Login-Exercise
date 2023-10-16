@@ -9,13 +9,16 @@
 
     <Button
         android:id="@+id/welcomeBtnCloseSession"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="24dp"
-        android:backgroundTint="@color/white"
+        android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:backgroundTint="@android:color/transparent"
         android:text="@string/close_session"
         android:textColor="@color/orange"
         android:textSize="24sp"
+        app:layout_constraintWidth_percent=".5"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
@@ -80,5 +83,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/accessibility_avatar" />
 </androidx.constraintlayout.widget.ConstraintLayout>

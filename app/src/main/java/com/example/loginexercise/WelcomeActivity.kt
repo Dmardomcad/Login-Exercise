@@ -14,27 +14,34 @@ class WelcomeActivity : AppCompatActivity() {
         binding = ActivityWelcomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        //region Init bindings
         binding.welcomeBtnCloseSession.setOnClickListener { closeSession() }
+        getExtras()
+        //endregion
+    }
 
+    private fun getExtras(){
+        //region text view bindings
         val savedEmail = intent.getStringExtra("email")
         binding.homeLabelThisUserEmail.text = savedEmail
 
         val savedName = intent.getStringExtra("name")
         binding.homeLabelThisUserName.text = savedName
+        //endregion
 
         val savedImage = intent.getIntExtra("avatar", 0)
         if(savedImage != 0){
             binding.homeImgAvatar.setImageResource(savedImage)
         }
-        }
+    }
 
     private fun closeSession(){
         val savedEmail = intent.getStringExtra("rememberEmail")
         val savedPassword = intent.getStringExtra("rememberPassword")
-        val alertDialogBuilder = AlertDialog.Builder(this)
 
-        alertDialogBuilder.setMessage("¿Cerrar sesión?")
-        alertDialogBuilder.setPositiveButton("Sí"){
+        val alertDialogBuilder = AlertDialog.Builder(this)
+        alertDialogBuilder.setMessage(R.string.confirm_close_session)
+        alertDialogBuilder.setPositiveButton(R.string.confirm_close_session_positive){
             _, _ ->
             val loginIntent = Intent(this, LoginActivity::class.java)
             loginIntent.putExtra("rememberEmail", savedEmail)
@@ -42,7 +49,7 @@ class WelcomeActivity : AppCompatActivity() {
             startActivity(loginIntent)
             finish()
         }
-        alertDialogBuilder.setNegativeButton("No") {
+        alertDialogBuilder.setNegativeButton(R.string.confirm_close_session_negative) {
             dialog, _ ->
             dialog.dismiss()
         }

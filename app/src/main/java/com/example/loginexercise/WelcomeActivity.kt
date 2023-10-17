@@ -24,6 +24,7 @@ class WelcomeActivity : AppCompatActivity() {
         val loginIntent = Intent(this, LoginActivity::class.java)
         loginIntent.putExtra("email", savedEmail)
         loginIntent.putExtra("password",savedPassword)
+        finish()
         startActivity(loginIntent)
         }
 

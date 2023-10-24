@@ -13,29 +13,33 @@ import androidx.appcompat.app.AlertDialog
 import com.example.loginexercise.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
-
-
     private lateinit var binding: ActivityLoginBinding
     private lateinit var userPreferences: UserPreferences
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
         userPreferences = UserPreferences(this)
 
-        //region bindings
-        val rememberSwitch = binding.loginSwitchRemember
-        rememberSwitch.isChecked = userPreferences.isRememberPassword()
+        //region set up
+        setupRememberSwitch()
+        setUpClickListeners()
+        setUpUI()
         //endregion
+    }
 
-        //region click listeners
+    //region set up methods
+    private fun setUpClickListeners(){
         binding.loginBtnClose.setOnClickListener { closeApp() }
         binding.loginBtnLogin.setOnClickListener { submitForm() }
-        //endregion
-
-        setUpUI()
     }
-    //region set up methods
+
+    private fun setupRememberSwitch(){
+        val rememberSwitch = binding.loginSwitchRemember
+        rememberSwitch.isChecked = userPreferences.isRememberPassword()
+    }
+
     private fun setUpLoginButton(){
         val savedEmail by lazy { intent.getStringExtra("email") }
         val savedPassword by lazy { intent.getStringExtra("password") }

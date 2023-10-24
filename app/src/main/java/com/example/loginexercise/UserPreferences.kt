@@ -2,8 +2,8 @@ package com.example.loginexercise
 
 import android.content.Context
 
-class UserPreferences (private val context: Context){
-    private val sharedPreferences = context.getSharedPreferences("login_data", Context.MODE_PRIVATE)
+class UserPreferences (context: Context){
+    private val sharedPreferences = context.applicationContext.getSharedPreferences("login_data", Context.MODE_PRIVATE)
 
     fun isRememberPassword(): Boolean{
         return sharedPreferences.getBoolean("remember_password", false)

@@ -9,4 +9,12 @@
     <string name="show_password">Mostrar contraseña</string>
     <string name="passwordInput">Introduce tu contraseña</string>
     <string name="required">Campo requerido</string>
+    <string name="errorMsgLength">Mínimo 6 carácteres</string>
+    <string name="errorMsgUpperCase">Mínimo 1 mayúscula</string>
+    <string name="errorMsgLowerCase">Mínimo 1 minúscula</string>
+    <string name="errorMsgNumber">Mínimo 1 número</string>
+    <string name="errorEmailValid">Email no válido</string>
+    <string name="errorMsgUserNotFound">Este usuario no está registrado</string>
+    <string name="errorDialogConectTitle">Error al conectar</string>
+    <string name="errorDialogAccept">@android:string/ok</string>
 </resources>

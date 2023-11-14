@@ -6,12 +6,14 @@ class UserProvider {
             User(
                 "Pepe",
                 "pepegzlez@example.es",
-                "a123456B"
+                "a123456B",
+                R.drawable.img__home_screen_pepe
             ),
             User(
                 "shadow",
                 "edgyemail@example.es",
-                "B65432a"
+                "B65432a",
+                R.drawable.img__home_screen_shadow
             )
         )
     }

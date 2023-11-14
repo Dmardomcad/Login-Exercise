@@ -13,6 +13,7 @@ import androidx.appcompat.app.AlertDialog
 import com.example.loginexercise.databinding.ActivityLoginBinding
 
 class LoginActivity : AppCompatActivity() {
+
     private lateinit var binding: ActivityLoginBinding
     private lateinit var userPreferences: UserPreferences
 
@@ -31,16 +32,16 @@ class LoginActivity : AppCompatActivity() {
 
     //region set up methods
     private fun setUpClickListeners(){
-        binding.loginBtnClose.setOnClickListener { closeApp() }
+        binding.loginBtnClose.setOnClickListener { finish() }
         binding.loginBtnLogin.setOnClickListener { submitForm() }
     }
 
-    private fun setupRememberSwitch(){
+    private fun setupRememberSwitch() {
         val rememberSwitch = binding.loginSwitchRemember
         rememberSwitch.isChecked = userPreferences.isRememberPassword()
     }
 
-    private fun setUpLoginButton(){
+    private fun setUpLoginButton() {
         val savedEmail by lazy { intent.getStringExtra("email") }
         val savedPassword by lazy { intent.getStringExtra("password") }
 
@@ -56,7 +57,7 @@ class LoginActivity : AppCompatActivity() {
             //do nothing
         }
     }
-    private fun setUpInputEmail(){
+    private fun setUpInputEmail() {
         binding.loginInputEmail.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
                 validateForm()
@@ -71,7 +72,7 @@ class LoginActivity : AppCompatActivity() {
             }
         })
     }
-    private fun setUpInputPassword(){
+    private fun setUpInputPassword() {
         binding.loginInputPassword.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
                 validateForm()
@@ -86,7 +87,7 @@ class LoginActivity : AppCompatActivity() {
             }
         })
     }
-    private fun setUpUI(){
+    private fun setUpUI() {
         setUpLoginButton()
         setUpInputEmail()
         setUpInputPassword()
@@ -119,13 +120,13 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun createWelcomeActivity(){
+    private fun createWelcomeActivity() {
         val savedEmail = binding.loginInputEmail.text.toString()
         val savedPassword = binding.loginInputPassword.text.toString()
+        val welcomeIntent = Intent(this, WelcomeActivity::class.java)
+
         userPreferences.saveRememberedEmail(savedEmail)
         userPreferences.saveRememberedPassword(savedPassword)
-
-        val welcomeIntent = Intent(this, WelcomeActivity::class.java)
 
         welcomeIntent.putExtra("email", savedEmail)
         welcomeIntent.putExtra("password", savedPassword)
@@ -134,6 +135,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun submitData() {
         val rememberSwitch = binding.loginSwitchRemember
+        val savedEmail = binding.loginInputEmail.text.toString()
         val welcomeIntent = Intent(this, WelcomeActivity::class.java)
 
         if (rememberSwitch.isChecked) {
@@ -141,10 +143,10 @@ class LoginActivity : AppCompatActivity() {
             createWelcomeActivity()
             finish()
         } else {
+            welcomeIntent.putExtra("email", savedEmail)
             startActivity(welcomeIntent)
             finish()
         }
-
     }
     //endregion
 
@@ -191,7 +193,4 @@ class LoginActivity : AppCompatActivity() {
     }
     //endregion
 
-    private fun closeApp() {
-        finish()
-    }
 }

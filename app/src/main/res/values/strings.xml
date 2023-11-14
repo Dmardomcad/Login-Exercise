@@ -9,6 +9,14 @@
     <string name="show_password">Mostrar contraseña</string>
     <string name="passwordInput">Introduce tu contraseña</string>
     <string name="required">Campo requerido</string>
+    <string name="my_data">Mis datos</string>
+    <string name="email_label">Email</string>
+    <string name="name_label">Nombre</string>
+    <string name="close_session">Cerrar sesión</string>
+    <string name="confirm_close_session">¿Cerrar sesión?</string>
+    <string name="confirm_close_session_positive">Sí</string>
+    <string name="confirm_close_session_negative">No</string>
+    <string name="accessibility_avatar">Avatar del usuario.</string>
     <string name="errorMsgLength">Mínimo 6 carácteres</string>
     <string name="errorMsgUpperCase">Mínimo 1 mayúscula</string>
     <string name="errorMsgLowerCase">Mínimo 1 minúscula</string>

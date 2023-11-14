@@ -32,7 +32,7 @@ class LoginActivity : AppCompatActivity() {
 
     //region set up methods
     private fun setUpClickListeners(){
-        binding.loginBtnClose.setOnClickListener { closeApp() }
+        binding.loginBtnClose.setOnClickListener { finish() }
         binding.loginBtnLogin.setOnClickListener { submitForm() }
     }
 
@@ -123,10 +123,10 @@ class LoginActivity : AppCompatActivity() {
     private fun createWelcomeActivity(){
         val savedEmail = binding.loginInputEmail.text.toString()
         val savedPassword = binding.loginInputPassword.text.toString()
+        val welcomeIntent = Intent(this, WelcomeActivity::class.java)
+
         userPreferences.saveRememberedEmail(savedEmail)
         userPreferences.saveRememberedPassword(savedPassword)
-
-        val welcomeIntent = Intent(this, WelcomeActivity::class.java)
 
         welcomeIntent.putExtra("email", savedEmail)
         welcomeIntent.putExtra("password", savedPassword)
@@ -135,6 +135,7 @@ class LoginActivity : AppCompatActivity() {
 
     private fun submitData() {
         val rememberSwitch = binding.loginSwitchRemember
+        val savedEmail = binding.loginInputEmail.text.toString()
         val welcomeIntent = Intent(this, WelcomeActivity::class.java)
 
         if (rememberSwitch.isChecked) {
@@ -142,6 +143,7 @@ class LoginActivity : AppCompatActivity() {
             createWelcomeActivity()
             finish()
         } else {
+            welcomeIntent.putExtra("email", savedEmail)
             startActivity(welcomeIntent)
             finish()
         }
@@ -191,7 +193,4 @@ class LoginActivity : AppCompatActivity() {
     }
     //endregion
 
-    private fun closeApp() {
-        finish()
-    }
 }

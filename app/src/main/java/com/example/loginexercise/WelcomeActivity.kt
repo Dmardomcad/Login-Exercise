@@ -14,38 +14,23 @@ class WelcomeActivity : AppCompatActivity() {
         binding = ActivityWelcomeBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        getUserData()
         //region Init bindings
         binding.welcomeBtnCloseSession.setOnClickListener { closeSession() }
-        getExtras()
         //endregion
-    }
-
-    private fun getExtras(){
-        //region text view bindings
-        val savedEmail = intent.getStringExtra("email")
-        binding.homeLabelThisUserEmail.text = savedEmail
-
-        val savedName = intent.getStringExtra("name")
-        binding.homeLabelThisUserName.text = savedName
-        //endregion
-
-        val savedImage = intent.getIntExtra("avatar", 0)
-        if(savedImage != 0){
-            binding.homeImgAvatar.setImageResource(savedImage)
-        }
     }
 
     private fun closeSession(){
-        val savedEmail = intent.getStringExtra("rememberEmail")
-        val savedPassword = intent.getStringExtra("rememberPassword")
-
+        val savedEmail = intent.getStringExtra("email")
+        val savedPassword = intent.getStringExtra("password")
+        val loginIntent = Intent(this, LoginActivity::class.java)
         val alertDialogBuilder = AlertDialog.Builder(this)
+
         alertDialogBuilder.setMessage(R.string.confirm_close_session)
         alertDialogBuilder.setPositiveButton(R.string.confirm_close_session_positive){
             _, _ ->
-            val loginIntent = Intent(this, LoginActivity::class.java)
-            loginIntent.putExtra("rememberEmail", savedEmail)
-            loginIntent.putExtra("rememberPassword",savedPassword)
+            loginIntent.putExtra("email", savedEmail)
+            loginIntent.putExtra("password",savedPassword)
             startActivity(loginIntent)
             finish()
         }
@@ -57,4 +42,15 @@ class WelcomeActivity : AppCompatActivity() {
         alertDialog.show()
         }
 
+    private fun getUserData(){
+        val savedEmail = intent.getStringExtra("email")
+        val user = UserProvider.mockUsers.find { it.email == savedEmail }
+
+        if (user != null) {
+            binding.homeLabelThisUserEmail.text = user.email
+            binding.homeLabelThisUserName.text = user.username
+            binding.homeImgAvatar.setImageResource(user.avatarId)
+        }
     }
+
+}

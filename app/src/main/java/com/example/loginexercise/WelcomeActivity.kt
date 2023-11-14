@@ -20,14 +20,14 @@ class WelcomeActivity : AppCompatActivity() {
         //endregion
     }
 
-    private fun closeSession(){
+    private fun closeSession() {
         val savedEmail = intent.getStringExtra("email")
         val savedPassword = intent.getStringExtra("password")
         val loginIntent = Intent(this, LoginActivity::class.java)
         val alertDialogBuilder = AlertDialog.Builder(this)
 
         alertDialogBuilder.setMessage(R.string.confirm_close_session)
-        alertDialogBuilder.setPositiveButton(R.string.confirm_close_session_positive){
+        alertDialogBuilder.setPositiveButton(R.string.confirm_close_session_positive) {
             _, _ ->
             loginIntent.putExtra("email", savedEmail)
             loginIntent.putExtra("password",savedPassword)
@@ -42,7 +42,7 @@ class WelcomeActivity : AppCompatActivity() {
         alertDialog.show()
         }
 
-    private fun getUserData(){
+    private fun getUserData() {
         val savedEmail = intent.getStringExtra("email")
         val user = UserProvider.mockUsers.find { it.email == savedEmail }
 

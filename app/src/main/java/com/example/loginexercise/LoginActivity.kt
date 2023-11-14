@@ -36,12 +36,12 @@ class LoginActivity : AppCompatActivity() {
         binding.loginBtnLogin.setOnClickListener { submitForm() }
     }
 
-    private fun setupRememberSwitch(){
+    private fun setupRememberSwitch() {
         val rememberSwitch = binding.loginSwitchRemember
         rememberSwitch.isChecked = userPreferences.isRememberPassword()
     }
 
-    private fun setUpLoginButton(){
+    private fun setUpLoginButton() {
         val savedEmail by lazy { intent.getStringExtra("email") }
         val savedPassword by lazy { intent.getStringExtra("password") }
 
@@ -57,7 +57,7 @@ class LoginActivity : AppCompatActivity() {
             //do nothing
         }
     }
-    private fun setUpInputEmail(){
+    private fun setUpInputEmail() {
         binding.loginInputEmail.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
                 validateForm()
@@ -72,7 +72,7 @@ class LoginActivity : AppCompatActivity() {
             }
         })
     }
-    private fun setUpInputPassword(){
+    private fun setUpInputPassword() {
         binding.loginInputPassword.addTextChangedListener(object : TextWatcher {
             override fun afterTextChanged(p0: Editable?) {
                 validateForm()
@@ -87,7 +87,7 @@ class LoginActivity : AppCompatActivity() {
             }
         })
     }
-    private fun setUpUI(){
+    private fun setUpUI() {
         setUpLoginButton()
         setUpInputEmail()
         setUpInputPassword()
@@ -120,7 +120,7 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun createWelcomeActivity(){
+    private fun createWelcomeActivity() {
         val savedEmail = binding.loginInputEmail.text.toString()
         val savedPassword = binding.loginInputPassword.text.toString()
         val welcomeIntent = Intent(this, WelcomeActivity::class.java)
